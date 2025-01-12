@@ -1,0 +1,9 @@
+<h1>Checkout</h1>
+<p>Service: {{ appointment.service.name }}</p>
+<p>Price: {{ appointment.service.price }}</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Pay Now</button>
+</form>
+

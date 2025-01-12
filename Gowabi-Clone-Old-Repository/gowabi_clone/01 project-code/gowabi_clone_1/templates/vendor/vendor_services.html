@@ -1,0 +1,15 @@
+<h1>Your Services</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Service</button>
+</form>
+
+<h2>Existing Services</h2>
+{% for service in services %}
+    <div>
+        <h3>{{ service.service.name }}</h3>
+        <p>Available: {{ service.is_available }}</p>
+    </div>
+{% endfor %}
+

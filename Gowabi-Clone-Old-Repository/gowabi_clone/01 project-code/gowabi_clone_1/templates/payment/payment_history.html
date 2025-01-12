@@ -1,0 +1,8 @@
+<h1>Payment History</h1>
+{% for payment in payments %}
+    <div>
+        <p>Service: {{ payment.appointment.service.name }}</p>
+        <p>Amount: {{ payment.amount }}</p>
+        <p>Status: {{ payment.status }}</p>
+    </div>
+{% endfor %}

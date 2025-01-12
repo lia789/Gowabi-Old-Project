@@ -1,0 +1,509 @@
+PROJECT BUILDING STEPS
+
+
+##### 01. Set Up Project Environment # Done
+1. Install Python, Django, Git, and virtual environment tools.
+2. Set up and activate a virtual environment.
+3. Initialize a Django project and create core apps.
+4. Initialize a Git repository and add a .gitignore.
+5. Install Django and essential packages, then save dependencies to requirements.txt.
+6. Create a .env file for environment variables and sensitive data.
+7. Update Django settings to use .env and configure local settings.
+8. Configure a local database (use SQLite or PostgreSQL).
+9. Run initial database migrations.
+10. Create a superuser for admin access.
+11. Start the development server to verify setup.
+
+
+##### 2. Configure Project Settings steps. #Done
+1. Add .env variables for secret key, debug mode, and allowed hosts.
+2. Set DEBUG to True for local development.
+3. Add 127.0.0.1 and localhost to ALLOWED_HOSTS.
+4. Update INSTALLED_APPS to include necessary Django and third-party apps.
+5. Set up database configuration to use environment variables from .env.
+6. Configure STATIC_URL and MEDIA_URL for static and media files.
+7. Add a secure SECRET_KEY in .env for production readiness.
+8. Set timezone and language preferences (e.g., TIME_ZONE='UTC', LANGUAGE_CODE='en-us').
+9. Add CORS and CSRF settings if required for frontend/backend integration.
+
+
+##### 3. Build Core Models and Database Schema
+1. Define models based on entities like Customer, Vendor, Appointment, Payment, Service.
+2. Set up fields and data types for each model (e.g., CharField, DateField, ForeignKey).
+3. Establish relationships (e.g., OneToOne, ForeignKey, ManyToMany) between models.
+4. Add constraints (e.g., unique=True, blank=True, null=True) for data integrity.
+5. Define any model-specific methods, like calculating totals or filtering availability.
+6. Create initial migrations with python manage.py makemigrations.
+7. Apply migrations to the database with python manage.py migrate.
+8. Add model __str__ methods for clear admin display.
+
+
+##### 4. Develop Authentication and Authorization
+1. Set up Django’s default authentication for user login and registration.
+2. Customize user model if needed (e.g., to add roles for Customer, Vendor, Staff).
+3. Implement role-based access controls with groups or custom permissions.
+4. Add login, registration, and password reset views and forms.
+5. Configure email verification for new users (optional but recommended).
+6. Set up token-based authentication if planning to use APIs (e.g., JWT or Django REST Auth).
+
+
+##### 5. Develop Core Features
+1. Service Booking: Create views for searching, filtering, and booking services.
+2. Multi-Payment Integration: Set up payment gateway integration (e.g., Stripe, PayPal).
+3. Appointment Management: Build appointment booking, rescheduling, and cancellation.
+4. Customer Profiles: Develop profile pages with booking and payment history.
+5. Vendor Dashboard: Implement views for managing services, schedules, and promotions.
+6. Notifications: Add email/SMS notifications for booking confirmations and reminders.
+7. Favorites and Reviews: Enable customers to save favorites and review services.
+
+
+##### 6. Implement Staff and Vendor Management
+1. Create models and views for managing Staff Profiles, schedules, and roles.
+2. Implement vendor-specific features for managing Staff Availability and tasks.
+3. Add functionality for staff scheduling (e.g., setting work hours and time off).
+4. Develop vendor dashboards to view staff performance metrics and attendance.
+5. Set up access control for staff to see only relevant information and tasks.
+
+
+##### 7. Integrate Notifications
+1. Configure email notifications for bookings, cancellations, and reminders.
+2. Set up SMS notifications with a service like Twilio for real-time updates.
+3. Enable push notifications or in-app alerts if using a mobile-friendly interface.
+4. Add settings in user profiles to manage notification preferences.
+5. Create notification templates for consistent and professional communication.
+
+
+##### 8. Build Frontend with Bootstrap 5
+1. Design responsive customer-facing pages for booking and profile management.
+2. Build vendor and staff dashboards with Bootstrap 5 components for easy navigation.
+3. Use Bootstrap’s grid system for a consistent and mobile-friendly layout.
+4. Style forms, buttons, and modals to create a professional look.
+5. Implement interactive elements, like date pickers and filters, using Bootstrap plugins.
+
+
+##### 9. Set Up Admin Dashboard
+1. Customize Django Admin for managing users, vendors, appointments, and payments.
+2. Add custom filters, search, and list displays for efficient data management.
+3. Implement analytics views for tracking bookings, payments, and user activity.
+4. Configure permissions so only admins and specific staff can access sensitive data.
+
+
+##### 10. Testing and QA
+1. Write unit tests for models, views, and forms to ensure code reliability.
+2. Perform integration testing for core workflows like booking and payment processing.
+3. Conduct user acceptance testing to validate the app meets business requirements.
+4. Run load testing to ensure the app handles high user volume.
+5. Perform security audits to identify vulnerabilities.
+
+
+##### 11. Deploy on AWS
+1. Set up an EC2 instance for hosting the Django application.
+2. Configure RDS for a production-grade database.
+3. Use S3 for static and media file storage, linked to Django.
+4. Set up a load balancer for scalability and high availability.
+5. Configure CloudFront or other CDN for content delivery optimization.
+6. Enable HTTPS with an SSL certificate for secure connections.
+
+
+##### 12. Monitor and Optimize
+1. Use AWS CloudWatch for real-time monitoring and logging.
+2. Set up alerts for critical metrics like CPU usage, memory, and response times.
+3. Optimize database queries and add caching where needed.
+4. Continuously update the application to address performance issues as they arise.
+5. Regularly review and improve code and infrastructure based on usage patterns.
+
+
+
+
+LIST OF CORE APPS:
+1. Users: Manages customers, vendors, staff profiles, authentication, and role-based access.
+2. Bookings: Handles service bookings, time slot management, appointment statuses, and notifications.
+3. Payments: Manages payments, payment history, refunds, and integrations with payment gateways.
+4. Services: Manages vendor services, including descriptions, pricing, duration, categories, and availability.
+5. Reviews: Allows customers to leave reviews and ratings for services.
+6. Notifications: Manages email/SMS notifications for appointments, reminders, and promotions.
+7. Reports: Provides analytics for vendors and administrators, including booking trends, revenue, and customer engagement.
+8. AdminDashboard: Provides an admin interface for managing the platform (for system administrators).
+
+
+
+==== USER APP ====
+DATA MODELS:
+Core Tables in the Users App
+
+User
+The main user model for the app, extending Django’s AbstractUser.
+This model includes fields for differentiating user roles (e.g., customer, vendor, staff).
+Authentication, username, password, and basic profile information are stored here.
+
+Customer
+Represents an individual using the platform to book services.
+Linked to the User model via a one-to-one relationship.
+Stores specific fields related to customer preferences and profile data.
+Additional fields may include contact details, address, profile image, and booking history preferences.
+
+Vendor
+Represents a business or service provider offering services on the platform.
+Also linked to the User model with a one-to-one relationship.
+Includes business-specific fields such as business name, address, description, and contact information.
+Each vendor can have multiple Service entries (handled in the Services app) and multiple Staff members.
+Has fields that support business-related data such as operating hours and business status (active/inactive).
+
+Staff
+Represents employees of a vendor who perform services (e.g., hairstylists, therapists).
+Connected to both the User and Vendor models through foreign key relationships.
+Includes fields like role, schedule availability, and job status (active/inactive).
+This model supports functionality for scheduling, managing workloads, and maintaining performance data.
+
+
+Data Model Plan
+1. User Table (Base User Model)
+Primary Fields:
+username, email, password (from Django’s base user model).
+is_customer, is_vendor, is_staff_member (Boolean fields to identify the type of user).
+Role-Specific Relationships:
+Customer (one-to-one relationship if the user is a customer).
+Vendor (one-to-one relationship if the user is a vendor).
+Staff (one-to-one relationship if the user is a staff member).
+Other Fields:
+Fields inherited from Django’s AbstractUser, including date_joined, last_login, etc.
+2. Customer Table
+Fields:
+user: Foreign key link to User, one-to-one relationship.
+phone_number: Unique field for contact.
+address: Physical address for the customer.
+date_of_birth: Optional field for personalization or age restrictions.
+profile_image: Profile picture (optional).
+preferences: Any stored customer preferences (e.g., notification preferences).
+Relationships:
+Links to the Booking model (one-to-many) to track customer appointments.
+Links to the Review model (one-to-many) for managing customer feedback.
+Usage:
+Customer profiles are essential for maintaining a personalized experience.
+This table stores data that personalizes communication and service recommendations.
+3. Vendor Table
+Fields:
+
+user: Foreign key link to User, one-to-one relationship.
+business_name: Name of the business.
+description: A brief description of the business.
+phone_number: Contact number for the business.
+address: Physical location.
+operating_hours: JSON or structured text to indicate availability.
+business_status: Field to indicate if the vendor is active or inactive on the platform.
+Relationships:
+
+Links to Service entries in the Services app (one-to-many) to manage services offered.
+Links to Staff entries (one-to-many) to manage employees.
+Links to Appointment entries (one-to-many) for tracking vendor appointments.
+Usage:
+
+Vendors manage their business information, services, and staff details.
+Business details, services, and availability are shared with customers for booking purposes.
+4. Staff Table
+Fields:
+
+user: Foreign key link to User, one-to-one relationship.
+vendor: Foreign key link to Vendor, indicating the business the staff member belongs to.
+role: Descriptive field for the staff member’s role (e.g., stylist, therapist).
+is_active: Boolean field to indicate if the staff member is currently employed/available.
+schedule: JSON or text field to outline available times and days.
+Relationships:
+
+Links to the Appointment model in the Bookings app (one-to-many), representing the staff member’s appointments.
+Links to the Service model in the Services app (many-to-many), representing services they’re qualified to perform.
+Usage:
+
+Staff profiles allow vendors to manage scheduling, availability, and roles.
+The schedule field helps the app show available time slots for bookings and staff assignments.
+
+
+Relationships Between Models
+User-Customer: One-to-one. A user may have one customer profile, with additional customer-specific fields stored separately in Customer.
+User-Vendor: One-to-one. A user linked to a vendor profile represents a business, with fields for business name, description, and other details stored in Vendor.
+Vendor-Staff: One-to-many. A vendor can have multiple staff members who can perform services on their behalf.
+Vendor-Services: One-to-many relationship with the Service model in the Services app.
+Staff-Services: Many-to-many relationship with the Service model in the Services app, indicating which services each staff member can perform.
+
+Constraints and Data Integrity
+Unique Constraints:
+
+phone_number should be unique for both Customer and Vendor to prevent duplicate contacts.
+Optional Fields:
+
+Fields like profile_image for Customer and description for Vendor are optional to keep data entry flexible.
+Validation Constraints:
+
+The role field in Staff should be constrained to predefined roles if you have specific job types.
+operating_hours in Vendor should follow a standard format for easy parsing and display.
+
+
+Usage Scenarios
+Customer Onboarding:
+
+When a new customer registers, a User instance is created, followed by a Customer profile linked to this user.
+The Customer profile stores personal details, preferences, and can be linked to bookings and reviews.
+Vendor Onboarding:
+
+Vendors sign up and create a User profile, which is linked to a Vendor instance.
+The Vendor profile stores business-specific details, and vendors can add Service and Staff entries to manage their offerings and workforce.
+Staff Management:
+
+Vendors can add staff members under their account, each linked to a User profile and associated with services they provide.
+Staff members’ schedules, availability, and performance data are used for managing bookings and performance tracking.
+
+
+=== Bookings App ===
+Core Tables in the Bookings App
+Appointment:
+
+This is the main table that stores each booking or appointment’s details.
+It tracks information such as the customer, vendor, service, assigned staff, appointment date and time, and the current status of the appointment.
+TimeSlot:
+
+This table defines available time slots for booking.
+Each slot will correspond to a specific vendor and, optionally, a specific staff member. It will allow customers to book only available time slots, preventing double-booking.
+It also helps vendors manage and control their availability.
+BookingNotification:
+
+Handles notifications related to bookings, such as confirmations, reminders, and cancellations.
+Stores information on the type of notification (e.g., SMS, email), the recipient, and the booking it’s associated with.
+This table can be linked to a notification service to send messages to customers and vendors.
+
+Data Model Plan
+1. Appointment Table
+Primary Fields:
+customer: A foreign key to the Customer model in the Users app, representing the customer who booked the appointment.
+vendor: A foreign key to the Vendor model, indicating the business offering the service.
+staff_member: A foreign key to the Staff model (optional) to assign a specific staff member to the appointment.
+service: A foreign key to the Service model in the Services app, representing the service being booked.
+appointment_date: A DateTimeField to indicate the scheduled date and time of the appointment.
+status: A field representing the appointment’s current state (e.g., Pending, Confirmed, Completed, Cancelled).
+Relationships:
+The customer, vendor, and service fields are foreign keys connecting the appointment to key entities in other apps.
+staff_member may be null if no specific staff member is required for a service.
+Usage:
+The Appointment table is central to the booking process and stores all details for each appointment.
+The status field helps track the lifecycle of each booking, from creation to completion or cancellation.
+2. TimeSlot Table
+Primary Fields:
+vendor: A foreign key to the Vendor model to specify which business is providing this time slot.
+staff_member: Optional foreign key to Staff, linking a time slot to a specific staff member if needed.
+start_time: The starting time of the slot (DateTimeField).
+end_time: The ending time of the slot (DateTimeField).
+is_booked: A boolean field to indicate if the time slot has been booked.
+Relationships:
+Links to Vendor and Staff to help manage staff schedules and vendor availability.
+Usage:
+The TimeSlot table allows vendors to create and manage their availability.
+During the booking process, customers can only select unbooked time slots to prevent double-booking.
+3. BookingNotification Table
+Primary Fields:
+appointment: A foreign key to the Appointment table, linking the notification to a specific appointment.
+recipient: A foreign key to the Customer model, indicating the notification recipient.
+notification_type: Indicates the type of notification (e.g., email, SMS).
+message: The content of the notification.
+sent_at: A timestamp for when the notification was sent.
+Relationships:
+Linked to the Appointment and Customer models to identify the appointment and customer receiving the notification.
+Usage:
+This table stores logs of notifications related to appointments.
+It helps in tracking the notification history and can support reminders or status updates for both customers and vendors.
+
+Relationships Between Models
+Appointment-Customer: Each appointment is associated with a single customer (one-to-many relationship).
+Appointment-Vendor: Each appointment is linked to a single vendor (one-to-many).
+Appointment-Service: Each appointment is tied to one service provided by a vendor (one-to-many).
+Appointment-Staff: Optionally links each appointment to a specific staff member if needed (many-to-one).
+Appointment-TimeSlot: Time slots may be indirectly linked to appointments by checking if they are booked.
+BookingNotification-Appointment: Each notification is associated with one appointment.
+
+Constraints and Data Integrity
+Unique Constraints:
+Each TimeSlot should be unique for each vendor and staff member combination to avoid overlapping bookings.
+Validation Constraints:
+The start_time and end_time in TimeSlot must be checked to ensure they don’t overlap with existing slots for the same vendor/staff.
+appointment_date in Appointment must be checked to ensure it falls within the working hours defined in Vendor.
+Usage Scenarios
+Booking Creation:
+
+When a customer books a service, an Appointment entry is created with the status set to "Pending" or "Confirmed".
+A TimeSlot entry is marked as booked, ensuring no further bookings for that time slot.
+Time Slot Management:
+
+Vendors manage their availability by creating TimeSlot entries, indicating the times they or their staff are available.
+Customers can only book from unbooked time slots, helping to prevent scheduling conflicts.
+Notifications:
+
+When an appointment is created or updated, a BookingNotification entry is generated to alert the customer or vendor.
+This table can work with a notification service to handle real-time messages, reminders, or cancellations.
+
+
+=== Service App ===
+Core Tables in the Services App
+Service:
+
+This is the primary table for defining each service offered by a vendor.
+Stores details such as name, description, price, duration, category, and availability status.
+Each service belongs to a specific vendor, so there’s a foreign key linking it to the Vendor model.
+ServiceCategory:
+
+This table helps categorize services, allowing customers to filter and search by category.
+Stores category names (e.g., "Massage", "Hair Care", "Facial") and a brief description of each category.
+Allows for flexible assignment of categories, so each service can be linked to a specific category.
+ServiceAvailability:
+
+Manages availability schedules for each service.
+Stores details like the start and end date for availability, as well as any recurring schedules.
+Provides vendors with a way to manage the availability of services based on business hours, holidays, or staff availability.
+Data Model Plan
+1. Service Table
+Primary Fields:
+
+vendor: Foreign key to the Vendor model, identifying which business offers the service.
+name: Name of the service (e.g., "Swedish Massage", "Haircut").
+description: Detailed description of the service.
+price: Price of the service.
+duration: Duration of the service in hours or minutes (using a DurationField).
+is_active: Boolean field to indicate if the service is currently active and bookable.
+Relationships:
+
+Linked to the Vendor model to identify which business offers each service.
+Linked to ServiceCategory for categorizing each service.
+Usage:
+
+The Service table provides detailed information for each service, enabling customers to make informed booking decisions.
+2. ServiceCategory Table
+Primary Fields:
+
+name: Name of the category (e.g., "Massage", "Hair Care").
+description: Optional description explaining the category (e.g., "Relaxing massage treatments").
+Relationships:
+
+Linked to the Service model in a one-to-many relationship (one category can have multiple services).
+Usage:
+
+The ServiceCategory table organizes services, enabling easier filtering and search options for customers.
+3. ServiceAvailability Table
+Primary Fields:
+
+service: Foreign key to the Service model, specifying which service this availability applies to.
+vendor: Foreign key to the Vendor model, specifying the business offering the service.
+start_date and end_date: Define the time range for availability.
+recurring_schedule: JSON field for any recurring availability, allowing vendors to specify days/times each week when the service is available.
+is_available: Boolean field indicating whether the service is available during this period.
+Relationships:
+
+Linked to Service to specify availability for each service.
+Linked to Vendor to track which vendor offers the service availability.
+Usage:
+
+The ServiceAvailability table ensures customers can only book services that are available during specified times.
+Helps manage vendor scheduling and prevent bookings during unavailable times, like holidays or maintenance periods.
+Relationships Between Models
+Service-Vendor: Each service is associated with a single vendor, representing the business providing that service (one-to-many).
+Service-ServiceCategory: Each service is linked to a single category, while each category can have multiple services.
+Service-ServiceAvailability: Each service can have multiple availability periods, allowing flexible scheduling for bookings.
+Constraints and Data Integrity
+Unique Constraints:
+The name of each service should be unique within a given vendor to prevent duplicate service entries.
+Validation Constraints:
+Ensure price and duration are positive values.
+For ServiceAvailability, ensure start_date is before end_date and recurring_schedule follows a consistent structure (e.g., JSON format specifying weekly hours).
+Usage Scenarios
+Service Listing and Categorization:
+
+When vendors add a new service, it is stored in the Service table and linked to an appropriate category in ServiceCategory.
+Customers can browse services by category, viewing detailed descriptions, prices, and durations.
+Service Availability Management:
+
+Vendors specify available dates and times for each service using the ServiceAvailability table.
+The app checks availability to prevent bookings outside defined periods and accommodates recurring schedules or special hours.
+Active/Inactive Services:
+
+The is_active field in Service allows vendors to deactivate services without deleting them, making it easy to manage temporary unavailability.
+
+
+=== Payments App ===
+Core Tables in the Payments App
+Payment:
+
+This is the main table that stores each payment transaction associated with a booking.
+It includes details like the appointment it relates to, the amount, payment method, status, and timestamp.
+Refund (Optional):
+
+If you want to handle refunds directly within the system, this table would store refund requests and statuses.
+It includes details like the original payment, refund amount, status, and processed date.
+Invoice (Optional):
+
+Generates and stores invoices for each completed transaction.
+Contains the payment details and serves as a record for customers and vendors.
+Can be extended with fields for tax calculations or additional fees if needed.
+Data Model Plan
+1. Payment Table
+Primary Fields:
+appointment: Foreign key to the Appointment model in the Bookings app, linking each payment to a specific booking.
+amount: The amount paid for the service, stored as a DecimalField.
+payment_date: Timestamp indicating when the payment was made.
+payment_method: Specifies the method used (e.g., credit card, PayPal).
+status: Tracks the current state of the payment (e.g., Pending, Completed, Failed).
+Relationships:
+Links to the Appointment model, associating each payment with a specific appointment, making it easy to retrieve related booking details.
+Usage:
+The Payment table is central to recording all transactions.
+Helps generate transaction histories for customers and vendors, which can be useful for reporting and accounting.
+2. Refund Table (Optional)
+Primary Fields:
+payment: Foreign key to the Payment table, linking the refund to the original transaction.
+refund_amount: The amount refunded to the customer.
+refund_date: The date the refund was processed.
+status: Tracks the current status of the refund (e.g., Pending, Approved, Processed, Denied).
+Relationships:
+Links to the Payment model, ensuring each refund is connected to a specific payment transaction.
+Usage:
+Allows for handling customer-initiated refunds and tracking their statuses.
+Can include business logic to limit refunds based on policies or statuses (e.g., only refundable if the appointment is canceled).
+3. Invoice Table (Optional)
+Primary Fields:
+payment: Foreign key to the Payment table, linking the invoice to a specific payment.
+invoice_date: The date the invoice was generated.
+total_amount: The total amount, including any additional fees or taxes.
+details: JSON field to store structured details (e.g., service description, tax breakdown).
+Relationships:
+Linked to the Payment table, associating each invoice with a specific payment.
+Usage:
+Useful for vendors and customers to have records of transactions, especially for accounting purposes.
+Could be integrated with a system for generating downloadable or printable invoices.
+Relationships Between Models
+Payment-Appointment: Each payment is associated with a single appointment (one-to-one or one-to-many, depending on the payment policy).
+Refund-Payment: Each refund is tied to a single payment transaction.
+Invoice-Payment: Each invoice is generated for a single payment.
+Constraints and Data Integrity
+Unique Constraints:
+Each Payment can be uniquely identified by its appointment and payment_date.
+Each Refund should be unique to a Payment transaction and may have additional constraints based on status.
+Validation Constraints:
+The amount in Payment should be greater than zero, as should refund_amount in Refund.
+For Refund, ensure the refund_amount does not exceed the original Payment amount.
+Usage Scenarios
+Processing a Payment:
+
+When a customer completes a booking, a Payment entry is created with details of the transaction, including amount, payment_date, and payment_method.
+The status field is set to “Pending” or “Completed” based on the processing result.
+Handling Refunds:
+
+If a refund is requested, a Refund entry is created, linked to the original Payment.
+The refund’s status can be updated as the refund is processed (e.g., from “Pending” to “Processed”).
+Generating Invoices:
+
+When a payment is marked as “Completed,” an Invoice can be generated for the customer or vendor.
+This invoice stores payment details in a structured format, making it easy for customers or vendors to download or view their transaction history.
+
+
+
+
+
+
+
+
+

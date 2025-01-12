@@ -1,0 +1,20 @@
+## Prompt 1 ##
+---------
+This is my SRS document. I have to build this soltutions.
+I want to build this solutions with Python, Django, Bootstrap5, AWS etc.
+
+Ready to my next questions.
+---------
+
+
+## Prompt 2 ##
+I want steps to follow build this solutions. I want as much as details steps as possible, so that will make my project building shedule easy.
+
+
+## Prompt 3 ##
+I want to build the solutions as profasional as good, and best practice about code design and project design. So, make the steps more good and easy to develope.
+
+
+
+
+I want to build this solutions with Python, Django, Bootstrap5, AWS etc. Give me high level 10 steps to build this solutions

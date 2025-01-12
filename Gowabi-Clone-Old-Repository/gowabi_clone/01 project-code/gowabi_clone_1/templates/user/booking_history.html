@@ -1,0 +1,8 @@
+<h1>Booking History</h1>
+{% for appointment in appointments %}
+    <div>
+        <p>Service: {{ appointment.service.name }}</p>
+        <p>Date: {{ appointment.appointment_time }}</p>
+        <p>Status: {{ appointment.status }}</p>
+    </div>
+{% endfor %}

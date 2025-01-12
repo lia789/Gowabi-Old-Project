@@ -1,0 +1,104 @@
+
+----------------- RAW
+gowabi_clone/
+│
+├── gowabi_clone/             # Root directory for the project settings
+│   ├── __init__.py
+│   ├── settings.py           # Main Django settings
+│   ├── urls.py               # Root URL configuration
+│   ├── asgi.py
+│   ├── wsgi.py
+│   ├── static/               # Project-wide static files (global CSS, JS)
+│   │   ├── css/              # Global CSS (e.g., shared styles across apps)
+│   │   ├── js/               # Global JS (e.g., shared scripts)
+│   │   └── images/           # Global images (e.g., logo, icons)
+│   └── manage.py
+│
+├── apps/                     # Directory to organize all app modules
+│   ├── __init__.py
+│   │
+│   ├── users/                # App for managing users (customers, vendors, admins)
+│   │   ├── migrations/
+│   │   ├── models.py         # User models like Customer, Vendor, Admin
+│   │   ├── views.py          # User views (login, signup, profile, etc.)
+│   │   ├── urls.py           # User-related routes
+│   │   ├── forms.py          # Forms for signup, login, etc.
+│   │   ├── templates/        # User-related templates
+│   │   │   └── users/
+│   │   │       ├── profile.html
+│   │   │       ├── signup.html
+│   │   │       └── login.html
+│   │   └── static/           # App-specific static files (CSS/JS)
+│   │       ├── css/
+│   │       └── js/
+│   │
+│   ├── services/             # App for managing service listings
+│   │   ├── models.py         # Models like Service, Category, Vendor Services
+│   │   ├── views.py          # Views for listing and detailing services
+│   │   ├── urls.py           # Routes related to services
+│   │   ├── templates/        # Templates for service-related pages
+│   │   │   └── services/
+│   │   │       ├── service_list.html
+│   │   │       ├── service_detail.html
+│   │   └── static/           # App-specific static files (CSS/JS)
+│   │       ├── css/
+│   │       └── js/
+│   │
+│   ├── bookings/             # App for handling bookings and appointments
+│   │   ├── models.py         # Appointment, booking, availability models
+│   │   ├── views.py          # Booking-related views (create, confirm bookings)
+│   │   ├── urls.py           # Booking-related routes
+│   │   ├── templates/        # Templates for bookings
+│   │   │   └── bookings/
+│   │   │       ├── booking_confirm.html
+│   │   │       └── appointment_list.html
+│   │   └── static/           # App-specific static files (CSS/JS)
+│   │       ├── css/
+│   │       └── js/
+│   │
+│   ├── payments/             # App for handling payment integration (Stripe, PayPal)
+│   │   ├── models.py         # Payment models (transaction, status, etc.)
+│   │   ├── views.py          # Payment views (process, confirmation)
+│   │   ├── urls.py           # Routes for payments
+│   │   ├── templates/        # Templates for payment-related pages
+│   │   │   └── payments/
+│   │   │       └── payment_confirmation.html
+│   │   └── static/           # Static files specific to payments
+│   │       ├── css/
+│   │       └── js/
+│   │
+│   ├── admin/                # Separate app for admin-related functions
+│   │   ├── models.py         # Models related to admin configurations
+│   │   ├── views.py          # Admin views for managing the system
+│   │   ├── urls.py           # Routes for admin management
+│   │   ├── templates/        # Templates for admin section
+│   │   └── static/           # Static files for admin app
+│   │       ├── css/
+│   │       └── js/
+│   │
+│   └── promotions/           # App for handling promotions, discounts
+│       ├── models.py         # Promotion models (codes, discounts)
+│       ├── views.py          # Views to apply promotions and discounts
+│       ├── urls.py           # Routes for promotions
+│       ├── templates/        # Templates for promotion-related pages
+│       └── static/           # Static files specific to promotions
+│           ├── css/
+│           └── js/
+│
+├── templates/                # Project-wide templates (e.g., base templates)
+│   ├── base.html             # Base template using Bootstrap 5
+│   ├── navbar.html           # Bootstrap navbar
+│   └── footer.html           # Bootstrap footer
+│
+├── static/                   # Project-wide static files (e.g., Bootstrap, fonts)
+│   ├── bootstrap/            # Bootstrap 5 files (local or CDN)
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── media/                    # User-uploaded files (profile pictures, service images)
+│
+├── requirements.txt          # Project dependencies (Django, DRF, Stripe, etc.)
+├── .env                      # Environment variables (API keys, DB credentials)
+└── README.md                 # Documentation for the project
+

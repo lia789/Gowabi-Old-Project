@@ -1,0 +1,5 @@
+This is Payment status of GoWabi clone project:
+
+01. Payment ID: R22626290243 | Date: 17 August 2024 | Amount: $500 | Client: Randy Cheng
+02. Payment ID: R31752425730 | Date: 28 September 2024 | Amount: $100 | Client: Randy Cheng
+03. Payment ID: R39408884269 | Date: 23 October 2024 | Amount: $100 | Client: Randy Cheng

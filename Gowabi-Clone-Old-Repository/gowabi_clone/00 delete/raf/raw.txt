@@ -1,0 +1,29 @@
+What are list of steps to build a solutions?
+1. Do requirements engineering and build SRS document.
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------- RAW
+
+
+
+SRS Document points?
+
+
+
+
+
+
+
+
+

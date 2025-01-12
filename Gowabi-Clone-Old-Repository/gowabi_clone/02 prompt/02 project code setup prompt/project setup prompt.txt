@@ -1,0 +1,9 @@
+===== Prompt 1 =====
+Materials:
+1. SRS pdf document
+2. Database diagram document
+
+-----------
+This is my SRS document and the database design document. Read the documents and ready to my next questions. I want to build this gowabi-clone solutions with bootstrap5, Django and server will be AWS.
+-----------
+

@@ -1,0 +1,20 @@
+What are tipical steps for build a solutions from scratch like:
+- User journey mapping
+- Feature grouping
+- Flow design|Diagram
+- Component overview
+
+
+
+
+
+------------
+Does you familiar with https://www.gowabi.com/en ??
+
+I want to build gowabi-clone. I have this raw SRS document. I don't want to build full feature, I just want to build Minimal Viable Product with core features.
+
+I also want to build the solutions with Python programming language and Django framework. The front end I want use bootstrap5. I don't want to deplopy it on cloud now, initial I want to run on my local machine with SQLite database.
+
+Read the documents and ready to my questions.
+
+Help me create a design for the solution with MVP

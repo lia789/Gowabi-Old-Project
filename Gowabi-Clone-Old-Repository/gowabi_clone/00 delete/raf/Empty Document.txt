@@ -1,0 +1,30 @@
+project building steps:
+1. Analize similar solutions and collect as much data as possible.
+2. Write down SRS document document.
+3. Design website structure on Figma
+4. Define data models
+5. Setup prompt on GPT
+6. Define website structure
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------- RAW
+
+
+
+
+
+
+
+
+
